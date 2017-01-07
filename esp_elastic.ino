@@ -10,6 +10,9 @@
 const char * networkName = "yours";
 const char * networkPswd = "yours";
 
+const char * hostname = "cthulhu";
+const int    port     = 9200;
+
 const int BUTTON_PIN = 0;
 const int TEMP_PIN = 27;
 const int LED_PIN = 5;
@@ -75,7 +78,7 @@ String zeroString(int i){
 void sendTemp()
 {
   WiFiClient client;
-  if (!client.connect("cthulhu", 9200)){
+  if (!client.connect(hostname, port)){
     Serial.println("Not connected");
     return;
   }
@@ -95,7 +98,7 @@ void sendTemp()
 
     client.print(
              String("PUT /esp32/tempc/") + epoch + " HTTP/1.1\r\n" +
-                    "Host: cthulhu\r\n" +
+                    "Host: "+ hostname + "\r\n" +
                     "Connection: close\r\n" +
                     "Accept: */*\r\n" +
                     "Content-Length: " + packet.length() + "\r\n" +
